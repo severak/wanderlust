@@ -1,6 +1,6 @@
 # wanderlust (map)
 
-experimental map to test/try/showcase some 
+experimental map to test/try/showcase some stuff
 
 ## ideas
 
