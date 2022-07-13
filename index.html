@@ -46,26 +46,10 @@
     };
 
     const toCyrilic = function (z, f) {
-        // our client is refugee from Ukraine, therefore name:uk is first
-        if (f.props['name:uk']) {
-            return f.props['name:uk'];
-        }
-        // (Russians users can of course change order, this is opensource after all)
-        if (f.props['name:ru']) {
-            return f.props['name:ru'];
-        }
-        // I don't like war. This thing is literally made for better understanding amongst nations. (End of politics rant.)
-
-        // now the magic bit, dynamic transliteration:
         return transliterate(f.props.name, 5);
     };
 
     const toSlavicLatin = function (z, f) {
-        // our client is someone from Czech republic, so name in Czech is prefered
-        if (f.props['name:cs']) {
-            return f.props['name:cs'];
-        }
-
         return transliterate(f.props.name, 1, 3);
     };
 
