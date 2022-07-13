@@ -19,3 +19,11 @@ experimental map to test/try/showcase some stuff
 - https://www.freemap.sk/
 - https://osmapp.org/
 - https://mapcarta.com/
+
+---
+
+> **wanderlust** 
+>
+> *noun*
+>
+> a strong desire to travel.

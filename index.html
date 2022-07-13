@@ -1,0 +1,30 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Wanderlust map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-hash@0.2.1/leaflet-hash.js"></script>
+    <script src="dist/wanderlust.js"></script>
+    <style>
+        body, #map {
+            height:100vh;
+            margin:0px;
+        }
+        .leaflet-tile { border: solid darkblue 1px; }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    const map = L.map('map');
+    let hash = new L.Hash(map);
+    if (!window.location.hash) map.setView(new L.LatLng(50,14),10);
+    var layer = wanderlust.leafletLayer({url:'https://api.protomaps.com/tiles/v2/{z}/{x}/{y}.pbf?key=f0d001233184bb16'});
+    wanderlust.vincent(layer, {});
+    layer.addTo(map);
+    layer.addInspector(map);
+</script>
+</body>
+</html>

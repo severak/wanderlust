@@ -1,0 +1,23 @@
+{
+  "name": "wanderlust",
+  "version": "0.1.0",
+  "description": "experimental map",
+  "scripts": {
+    "dev": "esbuild style/index.js --bundle --target=es2015 --outfile=dist/wanderlust.js --global-name=wanderlust --servedir=.",
+    "dist": "esbuild style/index.js --bundle --minify --target=es2015 --outfile=dist/wanderlust.js --global-name=wanderlust"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/severak/wanderlust.git"
+  },
+  "author": "Severak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/severak/wanderlust/issues"
+  },
+  "homepage": "https://github.com/severak/wanderlust#readme",
+  "dependencies": {
+    "esbuild": "^0.14.49",
+    "protomaps": "^1.19.0"
+  }
+}
