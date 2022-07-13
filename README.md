@@ -18,3 +18,4 @@ experimental map to test/try/showcase some stuff
 - mapy.cz
 - https://www.freemap.sk/
 - https://osmapp.org/
+- https://mapcarta.com/
