@@ -1,10 +1,11 @@
 // common parts of all styles, mostly shorthand functions and magic
 
-import { CircleSymbolizer, IconSymbolizer } from 'protomaps'
+import {CircleSymbolizer, IconSymbolizer, TextSymbolizer} from 'protomaps'
 import { GroupSymbolizer, CenteredTextSymbolizer, OffsetTextSymbolizer } from 'protomaps'
 import { LineSymbolizer, LineLabelSymbolizer } from 'protomaps'
 import { PolygonSymbolizer, PolygonLabelSymbolizer } from 'protomaps'
 import { Labelers} from 'protomaps/src/labeler';
+import {RewriteableTextAttr} from "./RewriteableTextAttr";
 
 const error = function(msg) {
     console.error(msg);
@@ -89,7 +90,13 @@ export const makeStyle = function() {
             rule.filter = def.what;
         }
 
-        console.log(rule);
+        if (def.text && (typeof def.text == "function") && rule.symbolizer.centered.symbolizer instanceof TextSymbolizer) {
+            // TODO - implement this ugly hack in better way
+            // hack - we are going to change our text attr to hacked one
+            rule.symbolizer.centered.symbolizer.text = new RewriteableTextAttr({
+                label_props: def.text
+            });
+        }
 
         style.label_rules.push(rule);
     };

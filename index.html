@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-hash@0.2.1/leaflet-hash.js"></script>
+    <script src="dist/leaflet.search.js"></script>
+    <script src="dist/leaflet.functionButton.js"></script>
+    <script src="http://steen.free.fr/scripts/transliteration.js"></script>
     <script src="dist/wanderlust.js"></script>
     <style>
         body, #map {
@@ -20,11 +23,63 @@
 <script>
     const map = L.map('map');
     let hash = new L.Hash(map);
+    // initial position
     if (!window.location.hash) map.setView(new L.LatLng(50,14),10);
+
+    // own layer(s)
     var layer = wanderlust.leafletLayer({url:'https://api.protomaps.com/tiles/v2/{z}/{x}/{y}.pbf?key=f0d001233184bb16'});
     wanderlust.vincent(layer, {});
     layer.addTo(map);
     layer.addInspector(map);
+
+    // search
+    map.addControl(L.control.search());
+
+    // magic part - dynamic transliteration
+
+    const rot13 = (z, f) => {
+        let message = f.props.name;
+        const originalAlpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const cipher = "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM";
+        // TODO - implement rot13 in cyrilic - example https://codegolf.stackexchange.com/questions/194129/russian-caesar-cipher
+        return message.replace(/[a-z]/gi, letter => cipher[originalAlpha.indexOf(letter)]);
+    };
+
+    const toCyrilic = function (z, f) {
+        // our client is refugee from Ukraine, therefore name:uk is first
+        if (f.props['name:uk']) {
+            return f.props['name:uk'];
+        }
+        // (Russians users can of course change order, this is opensource after all)
+        if (f.props['name:ru']) {
+            return f.props['name:ru'];
+        }
+        // I don't like war. This thing is literally made for better understanding amongst nations. (End of politics rant.)
+
+        // now the magic bit, dynamic transliteration:
+        return transliterate(f.props.name, 5);
+    };
+
+    const toSlavicLatin = function (z, f) {
+        // our client is someone from Czech republic, so name in Czech is prefered
+        if (f.props['name:cs']) {
+            return f.props['name:cs'];
+        }
+
+        return transliterate(f.props.name, 1, 3);
+    };
+
+    // TODO - transliterate to ála https://stevemorse.org/russian/rus2eng.html
+
+    // switching languages
+    var btn = L.functionButtons([{ content: 'Latin to Cyrilic' }, { content: 'Cyrilic to Latin'}, {content: 'Fake Klingon (latin rot13)'}, {content: '(original)'}]);
+    btn.on('clicked', function(data) {
+        if( data.idx == 0 )wanderlust.vincent(layer, {transliterator: toCyrilic});
+        if( data.idx == 1 )wanderlust.vincent(layer, {transliterator: toSlavicLatin});
+        if( data.idx == 2 )wanderlust.vincent(layer, {transliterator: rot13});
+        if( data.idx == 3 )wanderlust.vincent(layer, {transliterator: false});
+    });
+    map.addControl(btn);
 </script>
 </body>
 </html>

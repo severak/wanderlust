@@ -53,6 +53,7 @@ export default function vincent(layer, options) {
     s.name({
         layer: 'places',
         color: '#000',
+        text: options.transliterator || ['name'],
         what: feat.municipality
     });
 
