@@ -85,7 +85,7 @@ L.Control.Search = L.Control.extend({
             queryParams.email = this.options.email;
         if( this._map.getBounds() )
             queryParams.viewbox = this._map.getBounds().toBBoxString();
-        var url = 'http://nominatim.openstreetmap.org/search' + L.Util.getParamString(queryParams);
+        var url = '//nominatim.openstreetmap.org/search' + L.Util.getParamString(queryParams);
         var script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = url;
