@@ -2,7 +2,7 @@
 //
 // very simple style focused on railways
 
-import { feat } from '../features';
+import { features } from '../features';
 import { makeStyle, randomColor, switchToStyle } from '../common';
 
 export default function vincent(layer, options) {
@@ -11,50 +11,46 @@ export default function vincent(layer, options) {
     s.background('#EEE8D5');
 
     s.area({
-        layer: 'natural',
+        what: features.wood,
         color: '#CAEDAB',
-        what: feat.wood
     });
 
     s.line({
-        layer: 'physical_line',
+        what: features.waterways_all,
         color: '#7BAFDE',
-        what: feat.waterways
+
     });
 
     s.area({
-        layer: 'water',
+        what: features.water_all,
         color: '#7BAFDE',
     });
 
     s.line({
-        layer: 'roads',
+        what: features.roads_all,
         color: '#F6C141'
     });
 
     s.line({
-        layer: 'transit',
+        what: features.railways_all,
         color: '#000',
-        what: feat.railway
     });
 
     s.area({
-        layer: 'buildings',
+        what: features.buildings_all,
         color: '#D6C1DE',
     });
 
     s.line({
-        layer: 'boundaries',
+        what: features.stateBorders,
         color: '#882E72',
         width: 3,
-        what: feat.stateBorders
     });
 
     s.name({
-        layer: 'places',
+        what: features.municipality,
         color: '#000',
-        text: options.transliterator || ['name'],
-        what: feat.municipality
+        text: options.transliterator || ['name']
     });
 
     switchToStyle(layer, s);

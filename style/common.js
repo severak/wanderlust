@@ -33,12 +33,12 @@ export const makeStyle = function() {
 
     // simple line
     style.line = function (def) {
-        if (!def.layer) error('undefined layer for line!');
+        if (!def.what) error('undefined what for line!');
         if (!def.color) error('undefined color for line!');
         def.width = def.width || 1;
 
         let rule = {
-            dataLayer: def.layer,
+            dataLayer: def.what.dataLayer,
             symbolizer: (new LineSymbolizer({
                 color: def.color,
                 width: def.width,
@@ -47,8 +47,8 @@ export const makeStyle = function() {
             })),
         };
 
-        if (def.what) {
-            rule.filter = def.what;
+        if (def.what.filter) {
+            rule.filter = def.what.filter;
         }
 
         style.paint_rules.push(rule);
@@ -56,18 +56,18 @@ export const makeStyle = function() {
 
     // simple polygon
     style.area = function (def) {
-        if (!def.layer) error('undefined layer for area!');
+        if (!def.what) error('undefined what for area!');
         if (!def.color) error('undefined color for area!');
 
         let rule = {
-            dataLayer: def.layer,
+            dataLayer: def.what.dataLayer,
             symbolizer: (new PolygonSymbolizer({
                 fill: def.color
             })),
         };
 
-        if (def.what) {
-            rule.filter = def.what;
+        if (def.what.filter) {
+            rule.filter = def.what.filter;
         }
 
         style.paint_rules.push(rule);
@@ -75,19 +75,19 @@ export const makeStyle = function() {
 
     // simple (centered) text
     style.name = function (def) {
-        if (!def.layer) error('undefined layer for name!');
+        if (!def.what) error('undefined what for name!');
         if (!def.color) error('undefined color for name!');
 
         let rule = {
-            dataLayer: def.layer,
+            dataLayer: def.what.dataLayer,
             symbolizer: (new CenteredTextSymbolizer({
                 fill: def.color,
                 // TODO - halo -> stroke
             })),
         };
 
-        if (def.what) {
-            rule.filter = def.what;
+        if (def.what.filter) {
+            rule.filter = def.what.filter;
         }
 
         if (def.text && (typeof def.text == "function") && rule.symbolizer.centered.symbolizer instanceof TextSymbolizer) {
