@@ -15,6 +15,16 @@ export default function vincent(layer, options) {
         color: '#CAEDAB',
     });
 
+    s.area({
+        what: {
+            dataLayer: 'landuse',
+            filter: function (z, f) {
+                return z < 16 && (f.props.landuse=="residential" || f.props.landuse=="industrial");
+            }
+        },
+        color: '#D6C1DE',
+    });
+
     s.line({
         what: features.waterways_all,
         color: '#7BAFDE',
